@@ -4,8 +4,9 @@ function dbConnect($usertype, $connectionType = 'mysqli')
 // Замечание: Если допускается ошибка при работе через PDO,
 // то расширение PDO сгенерирует исключение и отобразит имя пользователя 
 // базы данных и пароль на экране. Поэтому нужно try...catch.
+
 {
-   $host = '127.0.0.1';
+   $host = 'localhost';
    $db = 'phpsols';
    if ($usertype  == 'read') 
    {
@@ -18,24 +19,28 @@ function dbConnect($usertype, $connectionType = 'mysqli')
 	   $pwd = '0Ch@Nom1$u';
    } 
    else 
-   {
-      exit('Unrecognized connection type');
+   {  
+      echo 'Unrecognized connection type';
    }
    
    if ($connectionType == 'mysqli') 
    {
-      return new mysqli($host, $user, $pwd, $db) or die ('Cannot open database');
+      $mysqli=new mysqli($host, $user, $pwd, $db); 
+      if (mysqli_connect_errno()) 
+      { 
+         echo "Подключение к серверу MySQL невозможно. Код ошибки: ".mysqli_connect_error(); 
+      } 
+      else {return $mysqli;}      
    } 
-      else 
+   else 
    {
       try 
       {
-         return new PDO("mysql:host=$host;dbname=$db", $user, $pwd);
+         return new PDO("mysql:host=$host;dbname=$db",$user,$pwd);
       } 
       catch (PDOException $e) 
       {
          echo 'Cannot connect to database';
-         exit;
       }
    }
 }

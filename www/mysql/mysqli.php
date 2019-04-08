@@ -1,39 +1,41 @@
 <?php
 require_once('../includes/connection.inc.php');
-// Ñáðàñûâàåì ñ÷åò÷èê ñ÷èòàííûõ çàïèñåé
+// ÐŸÐ¾Ð´ÑÐ¾ÐµÐ´Ð¸Ð½ÑÐµÐ¼ÑÑ Ðº MySQL
+$conn = dbConnect('read');
+
+/*
+if ($result = $conn->query('SELECT image_id, filename FROM images ORDER BY image_id DESC LIMIT 5')) 
+{ 
+    print("ÐžÑ‡ÐµÐ½ÑŒ ÐºÑ€ÑƒÐ¿Ð½Ñ‹Ðµ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ñ‹:\n"); 
+    // Ð’Ñ‹Ð±Ð¸Ñ€Ð°ÐµÐ¼ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ñ‹ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° 
+    while( $row = $result->fetch_assoc() )
+    { 
+        printf("%s (%s)\n", $row['image_id'], $row['filename']); 
+    } 
+    // ÐžÑÐ²Ð¾Ð±Ð¾Ð¶Ð´Ð°ÐµÐ¼ Ð¿Ð°Ð¼ÑÑ‚ÑŒ 
+    $result->close(); 
+} 
+*/
+
+// Ð“Ð¾Ñ‚Ð¾Ð²Ð¸Ð¼ SQL Ð·Ð°Ð¿Ñ€Ð¾Ñ
+$sql = 'SELECT * FROM images';
+// Ð¡Ð±Ñ€Ð°ÑÑ‹Ð²Ð°ÐµÐ¼ ÑÑ‡ÐµÑ‚Ñ‡Ð¸Ðº ÑÑ‡Ð¸Ñ‚Ð°Ð½Ð½Ñ‹Ñ… Ð·Ð°Ð¿Ð¸ÑÐµÐ¹
 $numRows=-1;
-// Ïîäñîåäèíÿåìñÿ ê MySQL
-//$conn = dbConnect('read');
-// Ãîòîâèì SQL çàïðîñ
-//$sql = 'SELECT * FROM images';
-// Ïåðåäàåì çàïðîñ è ïîëó÷àåì ðåçóëüòàò
-// $result = 
-//$conn->mysqli_query($sql); // or die(mysqli_error());
-// Îïðåäåëÿåì ñêîëüêî çàïèñåé áûëî ïîëó÷åíî
-//$numRows = $result->num_rows;
-
-
-$mysqli = new mysqli("localhost", 'psread', 'K1y0mi$u', 'phpsols');
-
-/* check connection */
-if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-}
-
-/* Create table doesn't return a resultset */
-if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
-    printf("Table myCity successfully created.\n");
-}
-
-if ($mysqli->query("SELECT * FROM images") === TRUE) {$numRows=7;}
-else {$numRows=9;}
-
-
-
-
-
+// ÐŸÐµÑ€ÐµÐ´Ð°ÐµÐ¼ Ð·Ð°Ð¿Ñ€Ð¾Ñ Ð¸ Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚
+$result=$conn->query($sql);
+if (!$result) 
+{ 
+   echo "ÐžÑˆÐ¸Ð±ÐºÐ° Ð·Ð°Ð¿Ñ€Ð¾ÑÐ°. ÐšÐ¾Ð´ Ð¾ÑˆÐ¸Ð±ÐºÐ¸: ".$conn->error(); 
+} 
+else 
+{
+   // ÐžÐ¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÐ¼ ÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ð·Ð°Ð¿Ð¸ÑÐµÐ¹ Ð±Ñ‹Ð»Ð¾ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¾
+   $numRows = $result->num_rows;
+}      
+// Ð—Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ 
+$conn->close(); 
 ?>
+
 <!DOCTYPE HTML>
 <html>
 <head>

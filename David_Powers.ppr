@@ -12,6 +12,7 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 David_Powers
@@ -68,8 +69,9 @@ Caret=1,1
 TopLine=1
 Caret=8,18
 [www\mysql\mysqli.php]
-TopLine=14
-Caret=17,30
+TopLine=37
+Caret=6,26
+Mark1=6,26
 [www\includes\connection.inc.php]
-TopLine=5
-Caret=10,9
+TopLine=21
+Caret=1,34
